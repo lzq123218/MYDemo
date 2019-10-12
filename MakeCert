@@ -1,0 +1,20 @@
+//create KEK eku certificate
+MakeCert.exe -r -cy authority -len 4096 -m 120 -a sha256 -sv CMIT_KEK_Root.pvk -pe -ss my -n "CN=CMIT KEK Root" CMIT_KEK_Root.cer
+
+pvk2pfx -pvk CMIT_KEK_Root.pvk -spc CMIT_KEK_Root.cer -pfx CMIT_KEK_Root.pfx
+
+MakeCert.exe -cy authority -len 2048 -m 60 -a sha256 -ic CMIT_KEK_Root.cer -iv CMIT_KEK_Root.pvk -eku 1.3.6.1.4.1.311.10.3.22,1.3.6.1.4.1.311.10.3.24,1.3.6.1.4.1.311.10.3.23,1.3.6.1.4.1.311.10.3.6,1.3.6.1.4.1.311.10.3.5,1.3.6.1.4.1.311.61.4.1,1.3.6.1.4.1.311.10.3.39,1.3.6.1.4.1.311.76.3.1,1.3.6.1.4.1.311.76.5.1 -sv CMIT_KEK_CA.pvk -pe -ss my -n "CN=CMIT KEK CA" CMIT_KEK_CA.cer
+
+pvk2pfx -pvk CMIT_KEK_CA.pvk -spc CMIT_KEK_CA.cer -pfx CMIT_KEK_CA.pfx
+
+
+
+
+//create selfsign eku certificate
+MakeCert.exe -r -cy authority -len 4096 -m 120 -a sha256 -sv CMIT_SELFSIGN_Root.pvk -pe -ss my -n "CN=CMIT SELFSIGN Root" CMIT_SELFSIGN_Root.cer
+
+pvk2pfx -pvk CMIT_SELFSIGN_Root.pvk -spc CMIT_SELFSIGN_Root.cer -pfx CMIT_SELFSIGN_Root.pfx
+
+MakeCert.exe -cy authority -len 2048 -m 60 -a sha256 -ic CMIT_SELFSIGN_Root.cer -iv CMIT_SELFSIGN_Root.pvk -eku 1.3.6.1.4.1.311.10.3.22,1.3.6.1.4.1.311.10.3.24,1.3.6.1.4.1.311.10.3.23,1.3.6.1.4.1.311.10.3.6,1.3.6.1.4.1.311.10.3.5,1.3.6.1.4.1.311.61.4.1,1.3.6.1.4.1.311.10.3.39,1.3.6.1.4.1.311.76.3.1,1.3.6.1.4.1.311.76.5.1 -sv CMIT_SELFSIGN_CA.pvk -pe -ss my -n "CN=CMIT SELFSIGN CA" CMIT_SELFSIGN_CA.cer
+
+pvk2pfx -pvk CMIT_SELFSIGN_CA.pvk -spc CMIT_SELFSIGN_CA.cer -pfx CMIT_SELFSIGN_CA.pfx
